@@ -1,12 +1,9 @@
 import sys
-import msvcrt
+import keyboard
 from ev3dev.ev3 import *
 
 motor_left = LargeMotor('outB')
 motor_right = LargeMotor('outC')
-
-def getch():
-    return msvcrt.getch().decode('utf-8')
 
 def forward():
     motor_left.run_forever(speed_sp=450)
@@ -28,18 +25,24 @@ def stop():
     motor_left.run_forever(speed_sp=0)
     motor_right.run_forever(speed_sp=0)
 
-while True:
-    k = getch()
-    print(k)
-    if k == 'w':
-        forward()
-    if k == 's':
-        back()
-    if k == 'a':
-        left()
-    if k == 'd':
-        right()
-    if k == ' ':
+def main():
+    try:
+        while True:
+            if keyboard.is_pressed('w'):
+                forward()
+            elif keyboard.is_pressed('s'):
+                back()
+            elif keyboard.is_pressed('a'):
+                left()
+            elif keyboard.is_pressed('d'):
+                right()
+            elif keyboard.is_pressed('space'):
+                stop()
+            elif keyboard.is_pressed('q'):
+                break
+    except KeyboardInterrupt:
         stop()
-    if k == 'q':
-        break
+        print("프로그램이 중단되었으며 모터가 정지되었습니다.")
+
+if __name__ == "__main__":
+    main()
