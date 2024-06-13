@@ -42,7 +42,6 @@ def main():
                 break
     except KeyboardInterrupt:
         stop()
-        print("프로그램이 중단되었으며 모터가 정지되었습니다.")
 
 if __name__ == "__main__":
     main()
